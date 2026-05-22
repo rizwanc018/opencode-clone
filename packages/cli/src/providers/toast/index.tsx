@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { createContext, useCallback, useContext, useRef, useState } from "react";
-// import { useTheme } from "../theme";
 import { useTerminalDimensions } from "@opentui/react";
+import { useTheme } from "../theme";
 import { SplitBorderChars } from "../../components/border";
 import type { ToastOptions, ToastVariant } from "./types";
 import { DEFAULT_DURATION } from "./types";
@@ -72,16 +72,16 @@ type ToastProps = {
 
 function Toast({ currentToast }: ToastProps) {
     const { width } = useTerminalDimensions();
-    // const { colors } = useTheme();
+    const { colors } = useTheme();
 
     if (!currentToast) {
         return null;
     }
 
     const variantColors: Record<ToastVariant, string> = {
-        success: "#00FF00",
-        error: "#FF0000",
-        info: "#00FFFF",
+        success: colors.success,
+        error: colors.error,
+        info: colors.info,
     };
 
     const borderColor = currentToast.variant ? variantColors[currentToast.variant] : variantColors.info;
@@ -98,7 +98,7 @@ function Toast({ currentToast }: ToastProps) {
             paddingRight={2}
             paddingTop={1}
             paddingBottom={1}
-            backgroundColor={"#000000"}
+            backgroundColor={colors.dialogSurface}
             borderColor={borderColor}
             border={["left", "right"]}
             customBorderChars={SplitBorderChars}
