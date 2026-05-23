@@ -1,14 +1,15 @@
-import type { ReactNode } from "react";
-import { createContext, useCallback, useContext, useRef, useState } from "react";
 import { useTerminalDimensions } from "@opentui/react";
-import { useTheme } from "../theme";
+import type { ReactNode } from "react";
+import { createContext, useCallback, useContext, useMemo, useRef, useState } from "react";
 import { SplitBorderChars } from "../../components/border";
+import { useTheme } from "../theme";
 import type { ToastOptions, ToastVariant } from "./types";
 import { DEFAULT_DURATION } from "./types";
 
 export type ToastContextValue = {
     show: (options: ToastOptions) => void;
 };
+
 const ToastContext = createContext<ToastContextValue | null>(null);
 
 export function useToast(): ToastContextValue {
@@ -54,9 +55,7 @@ export function ToastProvider({ children }: ToastProviderProps) {
         [clearCurrentTimeout],
     );
 
-    const value: ToastContextValue = {
-        show,
-    };
+    const value = useMemo(() => ({ show }), [show]);
 
     return (
         <ToastContext.Provider value={value}>
@@ -98,7 +97,7 @@ function Toast({ currentToast }: ToastProps) {
             paddingRight={2}
             paddingTop={1}
             paddingBottom={1}
-            backgroundColor={colors.dialogSurface}
+            backgroundColor={colors.surface}
             borderColor={borderColor}
             border={["left", "right"]}
             customBorderChars={SplitBorderChars}
