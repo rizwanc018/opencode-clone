@@ -1,3 +1,5 @@
+import type { Mode } from "@opencode-clone/database/enums";
+import type { SupportedChatModelId } from "@opencode-clone/shared";
 import type { DialogContextValue } from "../../providers/dialog";
 import type { ToastContextValue } from "../../providers/toast";
 
@@ -5,6 +7,10 @@ export type CommandContext = {
     exit: () => void;
     toast: ToastContextValue;
     dialog: DialogContextValue;
+    navigate: (path: string) => void;
+    mode: Mode;
+    setMode: (mode: Mode) => void;
+    setModel: (model: SupportedChatModelId) => void;
 };
 
 export type Command = {
