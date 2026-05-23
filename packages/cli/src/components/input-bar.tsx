@@ -23,7 +23,7 @@ export const TEXTAREA_KEY_BINDINGS: KeyBinding[] = [
     { name: "enter", shift: true, action: "newline" },
 ];
 
-function InputBar({ onSubmit, disabled = false }: Props) {
+export function InputBar({ onSubmit, disabled = false }: Props) {
     const textareaRef = useRef<TextareaRenderable>(null);
     const onSubmitRef = useRef<() => void>(() => {});
     const renderer = useRenderer();

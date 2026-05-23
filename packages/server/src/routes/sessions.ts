@@ -1,7 +1,7 @@
 import { zValidator } from "@hono/zod-validator";
-import { findSupportedChatModel } from "@nightcode/shared";
 import { db } from "@opencode-clone/database/client";
 import { MessageStatus, Mode, Role } from "@opencode-clone/database/enums";
+import { findSupportedChatModel } from "@opencode-clone/shared";
 import { Hono } from "hono";
 import { z } from "zod";
 

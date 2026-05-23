@@ -8,9 +8,16 @@ type Props = {
     onSubmit: (text: string) => void;
     inputDisabled?: boolean;
     loading?: boolean;
+    interruptible?: boolean;
 };
 
-export function SessionShell({ children, onSubmit, inputDisabled = false, loading = false }: Props) {
+export function SessionShell({
+    children,
+    onSubmit,
+    inputDisabled = false,
+    loading = false,
+    interruptible = false,
+}: Props) {
     return (
         <box flexDirection="column" flexGrow={1} width="100%" height="100%" paddingY={1} paddingX={2} gap={1}>
             <scrollbox flexGrow={1} width="100%" stickyScroll stickyStart="bottom">
@@ -29,7 +36,12 @@ export function SessionShell({ children, onSubmit, inputDisabled = false, loadin
                 paddingLeft={1}
             >
                 <box flexDirection="row" alignItems="center" gap={2}>
-                    {loading ? <Spinner /> : null}
+                    {loading ? (
+                        <>
+                            <Spinner />
+                            {interruptible ? <text>esc to interrupt</text> : null}
+                        </>
+                    ) : null}
                 </box>
 
                 <box flexDirection="row" gap={1} flexShrink={0} marginLeft="auto">

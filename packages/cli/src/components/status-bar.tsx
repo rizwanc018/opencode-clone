@@ -10,7 +10,7 @@ function StatusBar() {
             <text attributes={TextAttributes.DIM} fg={colors.dimSeparator}>
                 ›
             </text>
-            <text>opus-4-6</text>
+            <text>gemini-2.5-flash</text>
         </box>
     );
 }

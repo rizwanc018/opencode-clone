@@ -78,7 +78,6 @@ export function NewSession() {
 
     return (
         <SessionShell onSubmit={() => {}} inputDisabled loading>
-            <text>new</text>
             <UserMessage message={state.message} />
         </SessionShell>
     );
