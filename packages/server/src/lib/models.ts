@@ -1,6 +1,7 @@
 import { anthropic } from "@ai-sdk/anthropic";
 import { google } from "@ai-sdk/google";
 import { openai } from "@ai-sdk/openai";
+import type { ProviderOptions } from "@ai-sdk/provider-utils";
 import {
     findSupportedChatModel,
     type SupportedChatModel,
@@ -17,6 +18,46 @@ export type ResolvedModel = {
     model: LanguageModel;
     provider: SupportedProvider;
     modelId: SupportedChatModelId;
+    providerOptions?: ProviderOptions;
+};
+
+const ANTHROPIC_PROVIDER_OPTIONS: Partial<Record<AnthropicModelId, ProviderOptions>> = {
+    "claude-opus-4-6": {
+        anthropic: {
+            thinking: {
+                type: "enabled",
+                budgetTokens: 10000,
+            },
+        },
+    },
+    "claude-sonnet-4-6": {
+        anthropic: {
+            thinking: {
+                type: "enabled",
+                budgetTokens: 10000,
+            },
+        },
+    },
+};
+
+const OPENAI_PROVIDER_OPTIONS: Partial<Record<OpenAIModelId, ProviderOptions>> = {
+    "gpt-5.4": {
+        openai: {
+            thinking: {
+                reasoningSummary: "detailed",
+            },
+        },
+    },
+};
+
+const GOOGLE_PROVIDER_OPTIONS: Partial<Record<GoogleModelId, ProviderOptions>> = {
+    "gemini-2.5-flash": {
+        google: {
+            thinkingConfig: {
+                thinkingBudget: 10000,
+            },
+        },
+    },
 };
 
 function assertUnsupportedProvider(provider: never): never {
@@ -28,6 +69,7 @@ function resolveAnthropicModel(modelId: AnthropicModelId): ResolvedModel {
         model: anthropic(modelId),
         provider: "anthropic",
         modelId,
+        providerOptions: ANTHROPIC_PROVIDER_OPTIONS[modelId],
     };
 }
 
@@ -36,6 +78,7 @@ function resolveOpenAIModel(modelId: OpenAIModelId): ResolvedModel {
         model: openai(modelId),
         provider: "openai",
         modelId,
+        providerOptions: OPENAI_PROVIDER_OPTIONS[modelId],
     };
 }
 
@@ -44,6 +87,7 @@ function resolveGoogleModel(modelId: GoogleModelId): ResolvedModel {
         model: google(modelId),
         provider: "google",
         modelId,
+        providerOptions: GOOGLE_PROVIDER_OPTIONS[modelId],
     };
 }
 
